@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f5f7fb;
+      color: #111827;
+    }
+
+    .todo-app {
+      width: min(100%, 480px);
+      padding: 2rem;
+      border-radius: 1rem;
+      background: #ffffff;
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+    }
+
+    .todo-header {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .todo-header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .todo-input-group {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .todo-controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .todo-controls button,
+    .todo-submit {
+      border: none;
+      border-radius: 999px;
+      padding: 0.85rem 1.2rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: #1f2937;
+      color: #fff;
+      transition: background 0.2s ease;
+    }
+
+    .todo-controls button:hover,
+    .todo-submit:hover {
+      background: #111827;
+    }
+
+    .todo-submit {
+      width: 100%;
+    }
+
+    .todo-input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.85rem;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .task-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .task-list li {
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.85rem;
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body>
+  <main class="todo-app" aria-label="Todo App">
+    <header class="todo-header">
+      <h1>Todo App</h1>
+    </header>
+
+    <section class="todo-input-group">
+      <label for="new-task" class="sr-only">New task</label>
+      <input id="new-task" class="todo-input" type="text" placeholder="Add a new task" />
+      <button type="button" class="todo-submit">Add</button>
+    </section>
+
+    <section class="todo-controls" aria-label="Task filters">
+      <button type="button">All</button>
+      <button type="button">Active</button>
+      <button type="button">Completed</button>
+    </section>
+
+    <section>
+      <ul class="task-list" aria-label="Task list">
+        <li>Example task item</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
