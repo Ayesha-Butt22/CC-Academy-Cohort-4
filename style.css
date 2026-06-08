@@ -123,12 +123,31 @@ body {
   border-color: #bfdbfe;
 }
 
+.task-list-section {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .task-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 0.85rem;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .task-item {
@@ -141,7 +160,8 @@ body {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.3s ease, max-height 0.3s ease;
+  animation: slideInTask 0.3s ease;
 }
 
 .task-item:hover {
@@ -215,4 +235,101 @@ body {
   .task-action {
     justify-content: flex-start;
   }
+}
+
+/* ─── Task animations ─────────────────────────────────────────── */
+
+@keyframes slideInTask {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutTask {
+  from {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%) translateY(8px);
+  }
+}
+
+.task-item.removing {
+  animation: slideOutTask 0.3s ease forwards;
+}
+
+/* ─── Empty state ─────────────────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  color: #cbd5e1;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.empty-message {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.empty-hint {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+/* ─── Clear All button ────────────────────────────────────────── */
+
+.clear-all-btn {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  border-color: #fca5a5 !important;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.clear-all-btn:hover {
+  background: #fecaca !important;
+  color: #b91c1c !important;
+  transform: translateY(-1px);
 }

@@ -14,6 +14,8 @@ const taskInput      = document.getElementById('new-task');
 const addButton      = document.querySelector('.todo-submit');
 const taskList       = document.querySelector('.task-list');
 const filterButtons  = document.querySelectorAll('.todo-controls button');
+const emptyState     = document.querySelector('.empty-state');
+const clearAllBtn    = document.querySelector('.clear-all-btn');
 
 // ─── Active filter state ─────────────────────────────────────────────────────
 
@@ -26,6 +28,8 @@ window.addEventListener('DOMContentLoaded', function () {
     renderTask(task.id, task.text, task.completed);
   });
   applyFilter(currentFilter);
+  updateEmptyState();
+  updateClearAllButton();
 });
 
 // ─── Add task ────────────────────────────────────────────────────────────────
@@ -56,6 +60,9 @@ function addTask() {
 
   renderTask(task.id, task.text, task.completed);
   applyFilter(currentFilter); // respect active filter after adding
+
+  updateEmptyState();
+  updateClearAllButton();
 
   taskInput.value = '';
   taskInput.focus();
@@ -96,6 +103,50 @@ function renderTask(id, text, completed) {
   taskList.appendChild(listItem);
 }
 
+// ─── Empty state management ──────────────────────────────────────────────────
+
+function updateEmptyState() {
+  const items = taskList.querySelectorAll('.task-item');
+  const visibleItems = Array.from(items).filter(function (item) {
+    return item.style.display !== 'none';
+  });
+
+  if (visibleItems.length === 0) {
+    emptyState.style.display = 'flex';
+    clearAllBtn.style.display = 'none';
+  } else {
+    emptyState.style.display = 'none';
+    clearAllBtn.style.display = '';
+  }
+}
+
+// ─── Clear All button ────────────────────────────────────────────────────────
+
+function updateClearAllButton() {
+  const allTasks = getTasks();
+  if (allTasks.length === 0) {
+    clearAllBtn.style.display = 'none';
+  } else {
+    clearAllBtn.style.display = '';
+  }
+}
+
+clearAllBtn.addEventListener('click', function () {
+  if (confirm('Are you sure you want to delete all tasks?')) {
+    const items = taskList.querySelectorAll('.task-item');
+    items.forEach(function (item) {
+      item.classList.add('removing');
+      setTimeout(function () {
+        item.remove();
+      }, 300);
+    });
+
+    saveTasks([]);
+    updateEmptyState();
+    updateClearAllButton();
+  }
+});
+
 // ─── Filter logic ─────────────────────────────────────────────────────────────
 
 function applyFilter(filter) {
@@ -120,6 +171,8 @@ function applyFilter(filter) {
       item.style.display = isCompleted ? '' : 'none';
     }
   });
+
+  updateEmptyState();
 }
 
 // ─── Filter button clicks ─────────────────────────────────────────────────────
@@ -151,14 +204,19 @@ taskList.addEventListener('click', function (event) {
     saveTasks(tasks);
 
     applyFilter(currentFilter); // re-apply filter after status change
+    updateEmptyState();
   }
 
   // ── Delete ────────────────────────────────────────────────────────────────
   if (target.textContent === 'Delete') {
-    taskItem.remove();
-
-    const tasks = getTasks().filter(function (t) { return t.id !== id; });
-    saveTasks(tasks);
+    taskItem.classList.add('removing');
+    setTimeout(function () {
+      taskItem.remove();
+      const tasks = getTasks().filter(function (t) { return t.id !== id; });
+      saveTasks(tasks);
+      updateEmptyState();
+      updateClearAllButton();
+    }, 300);
   }
 
   // ── Edit / Save ───────────────────────────────────────────────────────────

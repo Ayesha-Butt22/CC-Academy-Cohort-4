@@ -22,10 +22,18 @@
       <button type="button">All</button>
       <button type="button">Active</button>
       <button type="button">Completed</button>
+      <button type="button" class="clear-all-btn" style="display: none;">Clear All</button>
     </section>
 
-    <section>
+    <section class="task-list-section">
       <ul class="task-list" aria-label="Task list"></ul>
+      <div class="empty-state" style="display: none;">
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="empty-message">No tasks yet</p>
+        <p class="empty-hint">Add a task to get started</p>
+      </div>
     </section>
   </main>
 
